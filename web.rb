@@ -24,7 +24,6 @@ get '/' do
     longitude = request["longitude"]
     distance = request["distance"]
     distance = 150 if distance == "NaN"
-    binding.pry
     googrequest = MapRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
 
     #request restaurant
