@@ -32,10 +32,10 @@ get '/' do
       haml :index, :locals => { :message => "There are no results in your area" }
     else
       result = response["results"].sample
-      urljson = googrequest.details(result["place_id"]).parsed_response
-      url = urljson["result"]["url"]
-      formatted_address = urljson["result"]["formatted_address"].gsub(" ", "+")
-      haml :display_results, :locals => { :result => result, :url => url, :latitude => latitude, :longitude => longitude, :formatted_address => formatted_address}
+      detailjson = googrequest.details(result["place_id"]).parsed_response
+      website = detailjson["result"]["website"] || nil
+      formatted_address = detailjson["result"]["formatted_address"].gsub(" ", "+")
+      haml :display_results, :locals => { :result => result, :website => website, :latitude => latitude, :longitude => longitude, :formatted_address => formatted_address, :distance => distance}
     end
   else
     haml :index, :locals => { :message => nil }
