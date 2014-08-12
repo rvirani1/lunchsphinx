@@ -6,6 +6,10 @@ require 'httparty'
 require 'pp'
 require './lib/maprequest.rb'
 
+configure do
+  enable :sessions
+end
+
 configure :development do
   set(:session_secret, 'a random string that wont change')
 end
@@ -18,11 +22,13 @@ get '/' do
   if request["latitude"] && request["longitude"]
     latitude = request["latitude"]
     longitude = request["longitude"]
-    googrequest = MapRequest.new("AIzaSyCGX1_9TCoxTio-8I79KbIxwVPXtb9UP08")
+    googrequest = MapRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
     response = googrequest.restaurants(latitude, longitude).parsed_response
     result = response["results"].sample
     urljson = googrequest.details(result["place_id"]).parsed_response
-    haml :display_results, :locals => { :result => result, :url => urljson["result"]["url"], :latitude => latitude, :longitude => longitude}
+    url = urljson["result"]["url"]
+    formatted_address = urljson["result"]["formatted_address"].gsub(" ", "+")
+    haml :display_results, :locals => { :result => result, :url => url, :latitude => latitude, :longitude => longitude, :formatted_address => formatted_address}
   else
     haml :index
   end

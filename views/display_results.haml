@@ -2,11 +2,12 @@
   .col-md-4
   .col-md-4
     .thumbnail
-      %img{ :src => "#{result["icon"]}", :alt => "Image of restaurant icon"}
+      %iframe{ :width =>  "100%", :height => "250", :frameborder => "0",   :src =>"https://www.google.com/maps/embed/v1/search?key=AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ&q=#{formatted_address}"}
       .caption
         %h3= result["name"].split.map(&:capitalize).join(' ')
-        %p= result["types"].map(&:capitalize).join(" ")
+        -#%p= result["types"].map(&:capitalize).join(" ")
         %p
-          %a.btn.btn-success{ :href => "#{url}", :role => "button", :target => "_blank" }Maps
+          %a.btn.btn-success{ :href => "#{url}", :role => "button", :target => "_blank" }Go To Maps
           %a.btn.btn-link#floatright{ :href => "http://#{request.host}:#{request.port}/?latitude=#{latitude}&longitude=#{longitude}", :role => "button" }Not Feelin' It
   .col-md-4
+

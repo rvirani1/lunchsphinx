@@ -6,6 +6,11 @@ h3 {
     line-height: 2.5em;
 }
 
-#floatright {
+#floatright, #submit {
     float: right;
 }
+
+iframe {
+    border: 0;
+}
+
