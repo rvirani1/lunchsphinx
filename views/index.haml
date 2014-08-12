@@ -1,3 +1,12 @@
+- if message
+  .row
+    .col-md-4
+    .col-md-4
+      .alert.alert-warning(role="alert")
+        %p#center
+          %strong= message
+    .col-md-4
+
 .row
   .col-md-4
   .col-md-4
@@ -5,7 +14,10 @@
       .panel-heading
         %h3 Find your lunch!
       .panel-body#message
-        You can and must click button for...
-        .btn.btn-default#submit Food!
+        %form.input-group
+          %input.form-control#distance(type="number" placeholder="Maximum Distance in Meters" autofocus="autofocus"  min="20" max="5000" defaultValue="150")
+          %span.input-group-btn
+            %button.btn.btn-default#submit(type="button")Food!
   .col-md-4
+.row
 %script(src="/js/index.js")

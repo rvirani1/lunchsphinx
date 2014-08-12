@@ -2,6 +2,10 @@ h3 {
     text-align: center;
 }
 
+#center {
+    text-align: center;
+}
+
 #message {
     line-height: 2.5em;
 }

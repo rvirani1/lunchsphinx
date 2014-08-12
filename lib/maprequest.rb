@@ -6,9 +6,9 @@ class MapRequest
     @options = { query: {key: apikey}}
   end
 
-  def restaurants(latitude, longitude)
+  def restaurants(latitude, longitude, distance)
     options = @options.clone
-    options[:query].merge!({:location => "#{latitude},#{longitude}", radius: 300, types: "food", opennow: "true"})
+    options[:query].merge!({:location => "#{latitude},#{longitude}", radius: distance, types: "food", opennow: "true"})
     self.class.get('/nearbysearch/json', options)
   end
 
