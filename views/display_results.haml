@@ -1,0 +1,12 @@
+.row
+  .col-md-4
+  .col-md-4
+    .thumbnail
+      %img{ :src => "#{result["icon"]}", :alt => "Image of restaurant icon"}
+      .caption
+        %h3= result["name"].split.map(&:capitalize).join(' ')
+        %p= result["types"].map(&:capitalize).join(" ")
+        %p
+          %a.btn.btn-success{ :href => "#{url}", :role => "button", :target => "_blank" }Maps
+          %a.btn.btn-link#floatright{ :href => "http://#{request.host}:#{request.port}/?latitude=#{latitude}&longitude=#{longitude}", :role => "button" }Not Feelin' It
+  .col-md-4
