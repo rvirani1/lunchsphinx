@@ -13,7 +13,10 @@ $( document ).ready( function() {
             console.log("latitude is " + latitude);
             console.log("longitude is " + longitude);
             console.log("accuracy is " + loc_data.coords.accuracy);
-            window.location = 'http://' + location.host + '/?latitude=' + latitude + '&longitude=' + longitude + '&distance=' + distance;
+            window.location = 'http://' + location.host + '/randomrestaurant?latitude=' + latitude + '&longitude=' + longitude + '&distance=' + distance;
         }
-    });
+    }); // closing the click function
+
+
+
 } );

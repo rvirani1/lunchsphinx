@@ -1,14 +1,43 @@
 .row
   .col-md-4
+  .col-md-4#f1_container
+    #f1_card
+      .front.face
+        .thumbnail
+          %iframe{ :width =>  "100%", :height => "250", :frameborder => "0",   :src =>"https://www.google.com/maps/embed/v1/search?key=AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ&q=#{formatted_address(restaurant)}"}
+          .caption
+            %h3#data{ :'data-placeid' => restaurant["place_id"] }= restaurant["name"].split.map(&:capitalize).join(' ')
+            %p
+              .btn.btn-success#details{ :role => "button" }Details
+              %a.btn.btn-link#floatright{ :href => "http://#{request.host}:#{request.port}/?latitude=#{request["latitude"]}&longitude=#{request["longitude"]}&distance=#{request["distance"]}", :role => "button" }Not Feelin' It
+      .back.face
+        %ul.list-group
+          %li.list-group-item
+            %h4
+              %span.label.label-default Name
+            %span.right#details-name
+          %li.list-group-item
+            %h4
+              %span.label.label-default Address
+            %span.right#details-address
+          %li.list-group-item
+            %h4
+              %span.label.label-default Phone
+            %span.right#details-phone
+          %li.list-group-item
+            %h4
+              %span.label.label-default Rating
+            %span.right#details-rating
+          %li.list-group-item
+            %h4
+              %span.label.label-default Website
+            %span.right#details-website
+          %li.list-group-item
+            %h4
+              %span.label.label-default Type
+            %span.right#details-types
   .col-md-4
-    .thumbnail
-      %iframe{ :width =>  "100%", :height => "250", :frameborder => "0",   :src =>"https://www.google.com/maps/embed/v1/search?key=AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ&q=#{formatted_address}"}
-      .caption
-        %h3= result["name"].split.map(&:capitalize).join(' ')
-        -#%p= result["types"].map(&:capitalize).join(" ")
-        %p
-          - if website
-            %a.btn.btn-success{ :href => "#{website}", :role => "button", :target => "_blank" }Website
-          %a.btn.btn-link#floatright{ :href => "http://#{request.host}:#{request.port}/?latitude=#{latitude}&longitude=#{longitude}&distance=#{distance}", :role => "button" }Not Feelin' It
-  .col-md-4
+%script(src="/js/display_results.js")
+
+
 

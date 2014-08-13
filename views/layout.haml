@@ -18,5 +18,15 @@
               %a.navbar-brand{:href => "/"}
                 %strong Riaz.Codes
                 LunchFinder
-      =yield
+    - if session[:flash]
+      .row
+        .col-md-4
+        .col-md-4
+          .alert.alert-warning(role="alert")
+            %p#center
+              %strong= session[:flash]
+              - session[:flash] = nil
+        .col-md-4
+
+    =yield
     %script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")

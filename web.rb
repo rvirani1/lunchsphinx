@@ -4,7 +4,7 @@ require 'json'
 require 'haml'
 require 'httparty'
 require 'pp'
-require './lib/maprequest.rb'
+require './lib/restaurantrequest.rb'
 
 configure do
   enable :sessions
@@ -19,27 +19,40 @@ configure :production do
 end
 
 get '/' do
-  if request["latitude"] && request["longitude"]
-    latitude = request["latitude"]
-    longitude = request["longitude"]
-    distance = request["distance"]
-    distance = 150 if distance == "NaN"
-    googrequest = MapRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
+  haml :index
+end
 
-    #request restaurant
-    response = googrequest.restaurants(latitude, longitude, distance).parsed_response
-    if response["results"] == []
-      haml :index, :locals => { :message => "There are no results in your area" }
-    else
-      result = response["results"].sample
-      detailjson = googrequest.details(result["place_id"]).parsed_response
-      website = detailjson["result"]["website"] || nil
-      formatted_address = detailjson["result"]["formatted_address"].gsub(" ", "+")
-      haml :display_results, :locals => { :result => result, :website => website, :latitude => latitude, :longitude => longitude, :formatted_address => formatted_address, :distance => distance}
-    end
+get '/randomrestaurant' do
+  #Set distance to 800 meters if distance is actually not a number. Assuming people walk 80 meters a minute
+  if request["distance"] == "NaN"
+    distance = 800
   else
-    haml :index, :locals => { :message => nil }
+    distance = request["distance"].to_i * 80
+  end
+  #get restaurant request object from google
+  google = RestaurantRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
+  restaurant = google.random_restaurant(latitude: request["latitude"], longitude: request["longitude"], distance: distance)
+  #redirect to index if there were no results
+  unless restaurant
+    session[:flash] = "There are no results in your area"
+    redirect to('/')
+  end
+  haml :display_results, :locals => { :restaurant => restaurant }
+end
+
+get '/:placeid/details.json' do
+  content_type :json
+  google = RestaurantRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
+  details= google.return_details(params[:placeid])
+  details.to_json
+end
+
+helpers do
+  def formatted_address(restaurant)
+    restaurant["formatted_address"].gsub(" ", "+")
   end
 end
+
+
 
 
