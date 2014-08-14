@@ -29,7 +29,7 @@ get '/randomrestaurant' do
     distance = request["distance"].to_i * 80
   end
   #get restaurant request object from google
-  google = RestaurantRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
+  google = RestaurantRequest.new(ENV['GOOGLE_API_KEY'])
   restaurant = google.random_restaurant(latitude: request["latitude"], longitude: request["longitude"], distance: distance)
   #redirect to index if there were no results
   unless restaurant
