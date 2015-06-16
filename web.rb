@@ -30,7 +30,7 @@ get '/randomrestaurant' do
   end
   #get restaurant request object from google
   google = RestaurantRequest.new(ENV['GOOGLE_API_KEY'])
-  restaurant = google.random_restaurant(latitude: request["latitude"], longitude: request["longitude"], distance: distance)
+  restaurant = google.random_restaurant :latitude => request["latitude"], :longitude => request["longitude"], :distance => distance
   #redirect to index if there were no results
   unless restaurant
     session[:flash] = "There are no results in your area"
@@ -41,7 +41,7 @@ end
 
 get '/:placeid/details.json' do
   content_type :json
-  google = RestaurantRequest.new("AIzaSyC7TuNaQTvLdE3A7wsdKAl4EMsZtrl0vhQ")
+  google = RestaurantRequest.new ENV["GOOGLE_API_KEY"]
   details= google.return_details(params[:placeid])
   details.to_json
 end
