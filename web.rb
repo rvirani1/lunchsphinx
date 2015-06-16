@@ -4,6 +4,7 @@ require 'haml'
 require 'httparty'
 require 'pp'
 require './lib/restaurantrequest.rb'
+require './lib/environment.rb'
 
 configure do
   enable :sessions

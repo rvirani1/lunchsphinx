@@ -8,10 +8,20 @@ class RestaurantRequest
   end
 
   def random_restaurant(hash)
-    @latitude = hash[:latitude]
+    @latitude  = hash[:latitude]
     @longitude = hash[:longitude]
-    @distance = hash[:distance]
-    options = { :query => { :location => "#{latitude},#{longitude}", radius: distance.to_s, types: "food", opennow: "true", key: @apikey}}
+    @distance  = hash[:distance]
+    options    = {
+      :query =>
+        {
+          :location => "#{latitude},#{longitude}",
+          :radius => distance.to_s,
+          :types => "food",
+          :opennow => "true",
+          :key => @apikey
+        },
+      :verify => false
+    }
     @restaurants = self.class.get('/nearbysearch/json', options)
     set_random_restaurant
     if no_restaurants?
@@ -31,7 +41,7 @@ class RestaurantRequest
   end
 
   def return_details(placeid = @restaurant["place_id"])
-    options = { :query => { key: @apikey, :placeid => placeid}}
+    options = {:query => { :key => @apikey, :placeid => placeid }, :verify => false }
     self.class.get('/details/json', options)["result"]
   end
 end
