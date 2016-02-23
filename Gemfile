@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'haml'
 gem 'httparty'
 gem 'figaro'
+gem 'puma'
 
 group :development do
   gem 'pry'

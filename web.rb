@@ -8,14 +8,8 @@ require './lib/environment.rb'
 
 configure do
   enable :sessions
-end
-
-configure :development do
-  set(:session_secret, 'a random string that wont change')
-end
-
-configure :production do
-  set(:session_secret, '*&(${)UIJH$(&*(&*(@(*)(!)))IUYA0984)})')
+  set :server, :puma
+  set(:session_secret, '91d9be49394ffe1bbe94c89d9cd3945e')
 end
 
 get '/' do
