@@ -4,7 +4,7 @@
     #f1_card
       .front.face
         .thumbnail
-          %iframe{ :width =>  "100%", :height => "250", :frameborder => "0",   :src =>"https://www.google.com/maps/embed/v1/search?key=#{ENV["GOOGLE_API_KEY"]}&q=#{formatted_address(restaurant)}"}
+          %iframe{ :width =>  "100%", :height => "250", :frameborder => "0",   :src =>"https://www.google.com/maps/embed/v1/search?key=#{ENV["GOOGLE_API_CLIENT_KEY"]}&q=#{formatted_address(restaurant)}"}
           .caption
             %h3#data{ :'data-placeid' => restaurant["place_id"] }= restaurant["name"].split.map(&:capitalize).join(' ')
             %p
